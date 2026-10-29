@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>名前を呼び合い、助け合える地域へ ｜ TABUWATA ワークブック紹介スライド</title>
+  <meta name="description" content="高校生から取り組んできた「日本語カフェ」の実践から生まれたTABUWATAワークブック。筆者が目指す、名前を呼び合い災害時にも助け合える地域づくりの想いを伝えるプレゼンテーションスライド。">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #E76F51;
+      --primary-dark: #C55338;
+      --primary-light: #FCECE8;
+      --secondary: #2A9D8F;
+      --secondary-light: #E4F5F2;
+      --dark: #264653;
+      --dark-surface: #1E3742;
+      --accent: #E9C46A;
+      --accent-light: #FDF7E7;
+      --bg: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --text: #2D3748;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+      --font-base: 'Zen Kaku Gothic New', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-en: 'Plus Jakarta Sans', sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-base);
+      color: var(--text);
+      background-color: #182228;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Presentation Frame */
+    .deck-container {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      height: 675px; /* 16:9 aspect ratio */
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Progress Bar */
+    .progress-bar-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.06);
+      z-index: 50;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 16.666%;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Slides Wrapper */
+    .slides-wrapper {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 44px 56px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px) scale(0.99);
+      transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      z-index: 10;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .slide-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    .slide-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* Slide Content Bodies */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* SLIDE 1: Title Slide */
+    .title-slide {
+      background: radial-gradient(circle at 90% 10%, rgba(231, 111, 81, 0.12), transparent 45%),
+                  radial-gradient(circle at 10% 90%, rgba(42, 157, 143, 0.12), transparent 45%),
+                  var(--card-bg);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 60px;
+    }
+    .title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(231, 111, 81, 0.15);
+    }
+    .title-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+    .title-main {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.25;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+    .title-main span.highlight {
+      background: linear-gradient(120deg, var(--primary) 0%, #F4A261 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .title-sub {
+      font-size: 1.35rem;
+      color: #4A5568;
+      max-width: 820px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .title-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(231, 111, 81, 0.2);
+      border-radius: var(--radius-md);
+      padding: 18px 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .author-info {
+      text-align: left;
+    }
+    .author-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .author-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    /* SLIDE 2: Origin & Problem */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .card-problem {
+      border-top: 5px solid #E63946;
+      background: linear-gradient(180deg, #FFF9F9 0%, #FFFFFF 100%);
+    }
+    .card-solution {
+      border-top: 5px solid var(--secondary);
+      background: linear-gradient(180deg, #F3FAF9 0%, #FFFFFF 100%);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .icon-bubble {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    .bubble-alert { background: #FFE8E8; color: #E63946; }
+    .bubble-seed { background: var(--secondary-light); color: var(--secondary); }
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+    .card-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #334155;
+    }
+    .card-list li strong {
+      color: var(--dark);
+    }
+    .list-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+    .dot-red { background: #E63946; }
+    .dot-teal { background: var(--secondary); }
+    .quote-box {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: white;
+      border-radius: var(--radius-sm);
+      border-left: 4px solid var(--secondary);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: #475569;
+    }
+
+    /* SLIDE 3: Vision (Contrast & Goal) */
+    .vision-container {
+      display: grid;
+      grid-template-columns: 1fr auto 1.3fr;
+      gap: 20px;
+      align-items: center;
+    }
+    .vision-box-bad {
+      background: #FFF5F5;
+      border: 2px dashed #FEB2B2;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+    }
+    .arrow-divider {
+      font-size: 2rem;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .vision-box-good {
+      background: linear-gradient(135deg, #FAFDFD 0%, #FFFFFF 100%);
+      border: 2px solid var(--secondary);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .vision-box-good::before {
+      content: '筆者が本当に目指す姿';
+      position: absolute;
+      top: -14px;
+      left: 24px;
+      background: var(--secondary);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+    }
+    .vision-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+    .pill-red { background: #FED7D7; color: #C53030; }
+    .good-points {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .good-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--secondary-light);
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+    }
+    .good-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .good-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+    .good-desc {
+      font-size: 0.95rem;
+      color: #334155;
+      line-height: 1.45;
+    }
+    .vision-summary-banner {
+      margin-top: 20px;
+      background: linear-gradient(90deg, var(--dark) 0%, var(--dark-surface) 100%);
+      color: white;
+      padding: 14px 24px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .banner-text {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .banner-highlight {
+      color: var(--accent);
+      font-size: 1.15rem;
+    }
+
+    /* SLIDE 4: Role of Workbook */
+    .needs-solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+    .voice-card {
+      background: #F8FAFC;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      border: 1px solid #E2E8F0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+    }
+    .speech-bubble {
+      position: relative;
+      background: white;
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid #CBD5E1;
+      font-size: 1rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 30px;
+      border-width: 10px 10px 0;
+      border-style: solid;
+      border-color: white transparent;
+      display: block;
+      width: 0;
+    }
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .feature-item {
+      background: white;
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      border-left: 5px solid var(--primary);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .feature-num {
+      font-family: var(--font-en);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .feature-content h4 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .feature-content p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* SLIDE 5: 3 Workshop Steps */
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .step-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .step-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: #EDF2F7;
+      color: #4A5568;
+    }
+    .step-badge.b1 { background: #FEF3C7; color: #92400E; }
+    .step-badge.b2 { background: #DBEAFE; color: #1E40AF; }
+    .step-badge.b3 { background: #D1FAE5; color: #065F46; }
+    .step-time {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .step-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .step-aim {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .step-desc {
+      font-size: 0.88rem;
+      color: #475569;
+      line-height: 1.45;
+      flex: 1;
+    }
+    .bottom-support-bar {
+      background: #F1F5F9;
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.95rem;
+    }
+    .support-tag {
+      font-weight: 800;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .support-details {
+      color: #475569;
+    }
+
+    /* SLIDE 6: Final Call to Action */
+    .cta-slide {
+      background: radial-gradient(circle at 50% 30%, rgba(231, 111, 81, 0.08), transparent 60%),
+                  var(--card-bg);
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 60px;
+    }
+    .cta-main-msg {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.35;
+      margin-bottom: 24px;
+      max-width: 900px;
+    }
+    .cta-main-msg span.mark {
+      background: linear-gradient(transparent 65%, #FDE047 65%);
+      padding: 0 4px;
+    }
+    .cta-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 960px;
+      margin-bottom: 32px;
+    }
+    .cta-card {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+    }
+    .cta-card-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .cta-card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .cta-card-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .cta-bottom-phrase {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      background: var(--primary-light);
+      padding: 12px 36px;
+      border-radius: 999px;
+      display: inline-block;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Deck Controls Footer */
+    .deck-footer {
+      height: 60px;
+      background: white;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      z-index: 20;
+    }
+    .controls-left, .controls-right, .controls-center {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--dark);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .btn:hover:not(:disabled) {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+    .slide-counter {
+      font-family: var(--font-en);
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .slide-counter span.current {
+      color: var(--primary);
+      font-size: 1.15rem;
+    }
+
+    /* Speaker Notes Drawer */
+    .notes-drawer {
+      background: #1E293B;
+      color: #E2E8F0;
+      max-width: 1200px;
+      width: 100%;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      padding: 16px 28px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      display: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border-top: 1px solid #334155;
+    }
+    .notes-drawer.open {
+      display: block;
+    }
+    .notes-header {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #94A3B8;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Keyboard Shortcuts Modal */
+    .shortcuts-hint {
+      color: #94A3B8;
+      font-size: 0.82rem;
+      margin-top: 12px;
+      display: flex;
+      gap: 16px;
+    }
+    .key-badge {
+      background: #334155;
+      color: #F8FAFC;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: monospace;
+    }
+
+    /* Print Styles (1 slide per page, clean print) */
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+      }
+      .deck-container {
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+      }
+      .deck-footer, .progress-bar-container, .notes-drawer, .shortcuts-hint {
+        display: none !important;
+      }
+      .slides-wrapper {
+        position: static !important;
+        height: auto !important;
+      }
+      .slide {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        height: 100vh !important;
+        min-height: 650px !important;
+        padding: 40px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide Deck Main Container -->
+  <main class="deck-container" id="deckContainer">
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Slides Wrapper -->
+    <div class="slides-wrapper">
+
+      <!-- SLIDE 1: Title -->
+      <section class="slide title-slide active" id="slide-1" data-index="1">
+        <div class="title-badge">
+          <span class="title-badge-dot"></span>
+          高校生の「日本語カフェ」から生まれた実践本
+        </div>
+        <h1 class="title-main">
+          名前を呼び合える、<br>
+          <span class="highlight">助け合えるまち</span>へ
+        </h1>
+        <p class="title-sub">
+          『TABUWATA ワークブック』が目指すもの ――<br>
+          となりに住む人と、今日から友だちになれる場所をつくろう
+        </p>
+        <div class="title-card">
+          <div class="icon-bubble bubble-seed">🤝</div>
+          <div class="author-info">
+            <div class="author-label">ACTIVITY HANDBOOK PRESENTATION</div>
+            <div class="author-name">TABUWATA（たぶわた）｜ 日本語カフェの実践より</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Origin & Problem -->
+      <section class="slide" id="slide-2" data-index="2">
+        <header class="slide-header">
+          <div>
+            <div class="slide-tag">STARTING POINT / きっかけ</div>
+            <h2 class="slide-title">「となりに住んでいるのに、話したことがない」</h2>
+            <div class="slide-subtitle">高校生のときに感じたモヤモヤと、「日本語カフェ」の始まり</div>
+          </div>
+        </header>
+        <div class="slide-body">
+          <div class="split-grid">
+            <div class="card card-problem">
+              <div class="card-header">
+                <div class="icon-bubble bubble-alert">🏘️</div>
+                <h3 class="card-title">よくあるまちの風景</h3>
+              </div>
+              <ul class="card-list">
+                <li>
+                  <span class="list-dot dot-red"></span>
+                  <div>同じマンションや近所に、外国から来た人が住んでいる</div>
+                </li>
+                <li>
+                  <span class="list-dot dot-red"></span>
+                  <div>ゴミ出しやすれ違いのとき、顔は見るけれど<strong>挨拶だけで通り過ぎてしまう</strong></div>
+                </li>
+                <li>
+                  <span class="list-dot dot-red"></span>
+                  <div>「話しかけてみたいけれど、言葉が通じるかな…」とお互いにドキドキしている</div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="card card-solution">
+              <div class="card-header">
+                <div class="icon-bubble bubble-seed">🌱</div>
+                <h3 class="card-title">私たちが始めたこと「日本語カフェ」</h3>
+              </div>
+              <ul class="card-list">
+                <li>
+                  <span class="list-dot dot-teal"></span>
+                  <div><strong>「同じまちに暮らしているのに、話せないなんてもったいない！」</strong>という想い</div>
+                </li>
+                <li>
+                  <span class="list-dot dot-teal"></span>
+                  <div>だれでも気軽に集まって、自然とおしゃべりできる場所をつくりました</div>
+                </li>
+              </ul>
+              <div class="quote-box">
+                「ただ同じまちに住むだけでなく、名前で呼び合える友だちへ。」
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: Vision (Goal) -->
+      <section class="slide" id="slide-3" data-index="3">
+        <header class="slide-header">
+          <div>
+            <div class="slide-tag">CORE PURPOSE / 一番伝えたいこと</div>
+            <h2 class="slide-title">目指すのは、「その日だけ楽しかったね」で終わらない関係</h2>
+            <div class="slide-subtitle">お互いに名前を知っていれば、毎日の暮らしも、いざという時も安心できる</div>
+          </div>
+        </header>
+        <div class="slide-body">
+          <div class="vision-container">
+            <div class="vision-box-bad">
+              <span class="vision-pill pill-red">✕ 目指していないこと</span>
+              <h4 style="font-size:1.15rem; color:#991B1B; margin-bottom:8px;">その日だけのイベント</h4>
+              <p style="font-size:0.9rem; color:#7F1D1D; line-height:1.45;">
+                お祭りの日は楽しくても、次の日にはまた「話さない他人」に戻ってしまう…
+              </p>
+            </div>
+
+            <div class="arrow-divider">➔</div>
+
+            <div class="vision-box-good">
+              <div class="good-points">
+                <div class="good-item">
+                  <div class="good-icon">🗣️</div>
+                  <div>
+                    <div class="good-title">街で「〇〇さん、こんにちは！」と名前で呼び合えること</div>
+                    <div class="good-desc">スーパーやすれ違ったときに、笑顔で手を振って挨拶できる日常のつながり。</div>
+                  </div>
+                </div>
+                <div class="good-item">
+                  <div class="good-icon">🤝</div>
+                  <div>
+                    <div class="good-title">地震や台風のとき、真っ先に声を掛け合えること</div>
+                    <div class="good-desc">「あのアパートの〇〇さんは大丈夫かな？」と心配して、助けに行ける関係。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="vision-summary-banner">
+            <span class="banner-text">「お互いの名前を知っている」――たったそれだけで、</span>
+            <span class="banner-highlight">いざという時に大切な命を守る大きな力になります</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: Role of Workbook -->
+      <section class="slide" id="slide-4" data-index="4">
+        <header class="slide-header">
+          <div>
+            <div class="slide-tag">WORKBOOK SOLUTION / この本の役目</div>
+            <h2 class="slide-title">「やってみたいけれど、不安だな…」という人の背中を押す本</h2>
+            <div class="slide-subtitle">だれでも読んでそのまま交流会が開ける、やさしい手引き</div>
+          </div>
+        </header>
+        <div class="slide-body">
+          <div class="needs-solution-grid">
+            <div class="voice-card">
+              <div style="font-weight: 800; color: #475569; font-size: 0.95rem;">地域でよく聞く声</div>
+              <div class="speech-bubble">
+                「外国の人と交流する場をつくりたいけれど、<strong>何から始めたらいいの？</strong>」
+              </div>
+              <div class="speech-bubble">
+                「日本語があまり話せない人と、<strong>どうやって仲良くなればいいか不安…</strong>」
+              </div>
+            </div>
+
+            <div class="features-list">
+              <div class="feature-item">
+                <div class="feature-num">01</div>
+                <div class="feature-content">
+                  <h4>実際にやってみて、本当に盛り上がったゲームだけを集めました</h4>
+                  <p>高校生からずっと続けてきた中で、みんなが笑顔になった確かな方法だけを厳選。</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-num">02</div>
+                <div class="feature-content">
+                  <h4>読むだけでOK！ 準備するものや司会のセリフまで書いてあります</h4>
+                  <p>机の並べ方やタイムスケジュール、声のかけ方までぜんぶ載っているので迷いません。</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-num">03</div>
+                <div class="feature-content">
+                  <h4>日本語が得意じゃなくても大丈夫！ ルールも言葉も「やさしい日本語」</h4>
+                  <p>言葉の壁をこえて、だれもが主役になれる工夫をたっぷり詰め込みました。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: 3 Workshop Steps -->
+      <section class="slide" id="slide-5" data-index="5">
+        <header class="slide-header">
+          <div>
+            <div class="slide-tag">3 STEP PROGRAM / 仲良くなれる流れ</div>
+            <h2 class="slide-title">ステップを踏んで、だれでも自然と仲良くなれる3つのゲーム</h2>
+            <div class="slide-subtitle">ワークブックに載っている、みんなが笑顔になるアイスブレイク＆対話プログラム</div>
+          </div>
+        </header>
+        <div class="slide-body">
+          <div class="steps-row">
+            <!-- Step 1 -->
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-badge b1">STEP 01</span>
+                <span class="step-time">⏱ 約20分</span>
+              </div>
+              <h3 class="step-name">名前あてゲーム</h3>
+              <div class="step-aim">お互いの言葉を知って、緊張をほぐす</div>
+              <p class="step-desc">
+                カードの絵に、自分の国の言葉で名前をつけるゲーム。「それ、どういう意味？」と自然に笑いが起きて、初対面のドキドキが消えます。
+              </p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-badge b2">STEP 02</span>
+                <span class="step-time">⏱ 約45分</span>
+              </div>
+              <h3 class="step-name">みんなで謎解きゲーム</h3>
+              <div class="step-aim">ひとつの目標にみんなで向かい、仲間になる</div>
+              <p class="step-desc">
+                グループで力を合わせてクイズに挑戦。言葉が通じなくても身ぶり手ぶりで知恵を出し合い、「解けた！」とハイタッチできます。
+              </p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-badge b3">STEP 03</span>
+                <span class="step-time">⏱ 約20分</span>
+              </div>
+              <h3 class="step-name">自己紹介ゲーム</h3>
+              <div class="step-aim">好きなことや国の話をして、もっと仲良くなる</div>
+              <p class="step-desc">
+                席を交代しながら、テーマに合わせておしゃべり。相手のことをよく知ることで、「また会いたい人」になります。
+              </p>
+            </div>
+          </div>
+
+          <div class="bottom-support-bar">
+            <div class="support-tag">
+              <span>💡</span> 司会をする人へ
+            </div>
+            <div class="support-details">
+              「やさしい日本語」で話すコツや、時間の配分、困ったときの対応も載っているので安心です
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: Final Call to Action -->
+      <section class="slide cta-slide" id="slide-6" data-index="6">
+        <div class="title-badge" style="background:#EBF5FF; color:#1E40AF; margin-bottom:16px;">
+          FUTURE WISH / これからの願い
+        </div>
+        <h2 class="cta-main-msg">
+          一人ひとりの小さな一歩が、<br>
+          <span class="mark">だれもが安心して暮らせるまち</span>をつくる
+        </h2>
+
+        <div class="cta-cards">
+          <div class="cta-card">
+            <div class="cta-card-icon">📖</div>
+            <div class="cta-card-title">あなたの一歩を応援</div>
+            <div class="cta-card-text">
+              「私にもできるかな」と思っていた人が、自信を持って場を開けるように。
+            </div>
+          </div>
+          <div class="cta-card">
+            <div class="cta-card-icon">🌱</div>
+            <div class="cta-card-title">まちじゅうに広がるつながり</div>
+            <div class="cta-card-text">
+              特別なリーダーだけでなく、ふつうに暮らす私たちが新しい輪をつくっていく。
+            </div>
+          </div>
+          <div class="cta-card">
+            <div class="cta-card-icon">🏘️</div>
+            <div class="cta-card-title">助け合える安心のまち</div>
+            <div class="cta-card-text">
+              お互いに名前を知っていて、何かあったときにも助け合える居場所を広げたい。
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-bottom-phrase">
+          「名前を呼び合える安心を、あなたのまちから。」
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Deck Controls Footer -->
+    <footer class="deck-footer">
+      <div class="controls-left">
+        <button class="btn" id="prevBtn" title="前のスライド (←)">
+          ◀ 前へ
+        </button>
+        <button class="btn btn-primary" id="nextBtn" title="次のスライド (→ / Space)">
+          次へ ▶
+        </button>
+      </div>
+
+      <div class="controls-center">
+        <div class="slide-counter">
+          <span class="current" id="currentSlideNum">1</span> / <span id="totalSlideNum">6</span>
+        </div>
+      </div>
+
+      <div class="controls-right">
+        <button class="btn" id="copySlideBtn" title="現在のスライド文章をクリップボードにコピー">
+          📋 スライド文章コピー
+        </button>
+        <button class="btn" id="notesToggleBtn" title="発表原稿の表示切替 (Nキー)">
+          📝 原稿メモ
+        </button>
+        <button class="btn" id="fullscreenBtn" title="全画面表示 (Fキー)">
+          ⛶ 全画面
+        </button>
+        <button class="btn" id="printBtn" title="印刷 / PDF保存">
+          🖨️ 印刷・PDF
+        </button>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Copy Toast Notification -->
+  <div id="copyToast" style="position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #264653; color: white; padding: 10px 24px; border-radius: 999px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.3); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 9999;">
+    ✅ クリップボードにコピーしました！
+  </div>
+
+  <!-- Speaker Notes Drawer -->
+  <aside class="notes-drawer" id="notesDrawer">
+    <div class="notes-header">
+      <span>SPEAKER SCRIPT / 発表原稿メモ</span>
+      <span style="font-family: monospace;">[N] キーで開閉</span>
+    </div>
+    <div id="notesContent">
+      <!-- Injected via JavaScript -->
+    </div>
+  </aside>
+
+  <!-- Keyboard Shortcuts Helper -->
+  <div class="shortcuts-hint">
+    <span><span class="key-badge">←</span> <span class="key-badge">→</span> または <span class="key-badge">Space</span> で移動</span>
+    <span><span class="key-badge">F</span> 全画面</span>
+    <span><span class="key-badge">N</span> 発表原稿</span>
+  </div>
+
+  <script>
+    // Speaker notes for each slide (Gentle & Storytelling style)
+    const speakerNotes = {
+      1: "【表紙】皆さん、こんにちは。今日は私たちがつくった『TABUWATA ワークブック』についてお話しします。私たちは高校生の頃から『日本語カフェ』という活動を続けてきました。同じまちに住む外国の人と日本の人が自然に友だちになり、何かあったときにも助け合えるまちをつくりたい。そんな想いで、誰でも交流会を開けるようにまとめたのが、このワークブックです。",
+      2: "【はじめに・きっかけ】皆さんの近所や同じマンションにも、外国から引っ越してきた方が住んでいませんか？ 朝のゴミ出しやすれ違いのとき、顔を合わせれば『あ、となりの人だな』とは分かる。でも、軽く会釈をするだけで通り過ぎてしまう。お互いに『話しかけてみたいけれど、言葉が通じるかな…』とドキドキして、きっかけがないまま何年も経ってしまう――そんな風景が、今のまちにはたくさんあります。私たちは高校生のとき、この状況にすごくモヤモヤしました。『同じまちで暮らしているのに、話さないままなんてすごくもったいない！』そう思って、誰もが気軽に集まっておしゃべりできる場所として始めたのが、私たちの原点『日本語カフェ』でした。",
+      3: "【私たちが目指すもの】私たちが目指しているのは、単に『あー、今日のイベント楽しかったね！』で終わってしまうことではありません。私たちが本当に作りたいのは、イベントが終わったあとの『毎日の暮らしの中での関係』です。例えば、スーパーのレジや道ばたでばったり会ったとき、『あ、〇〇さん！こんにちは！』ってお互いに名前を呼んで笑顔で手を振れること。それだけで、まちを歩くのがすごく温かい気持ちになります。そして、一番大事なのは、大きな地震や台風が起きたときです。まちが停電になって不安なとき、『あのアパートに住んでいる〇〇さん、ケガしてないかな？日本語の避難案内は届いてるかな？』と顔が思い浮かんで、すぐに声をかけに行ける関係。『名前を知り合っている』。たったそれだけのことが、いざという時に大切な命を守る大きな力になります。",
+      4: "【このワークブックの役目】まちの中で、『私も外国の人と交流する場をつくってみたい』と思ってくださる方はたくさんいます。でも同時に、『何から準備すればいいか分からない』『もしシーンと静かになったらどうしよう…』と不安になって、最初の一歩が踏み出せない方も多いんです。だから私たちは、自分たちが高校生のときから失敗と工夫を重ねてきた経験を一冊の本にまとめました。準備する道具や机の並べ方はもちろん、『司会の人がそのまま話せるセリフ』まで、ぜんぶ優しく書いてあります。この本をぺらぺらと読み進めるだけで、初めての人でも迷わず、温かいワークショップが開けるようになっています。",
+      5: "【ワークブックの中身】本の中には、私たちが何度もやってみて『これは本当にみんなが仲良くなれる！』と確信した3つのゲームを載せています。まず第1歩は『名前あてゲーム』です。可愛いカードの絵に、自分の国の言葉で名前をつけてみんなで覚えます。『えっ、それどういう意味？』『面白い響きだね！』と自然に笑顔がこぼれて、初対面の緊張が一気に吹き飛びます。第2歩は『謎解きゲーム』です。チームみんなで知恵を絞ってクイズを解きます。言葉が完璧に通じなくても、指をさしたり絵を描いたりしながら一緒に考えて、正解した瞬間に『やったー！』とみんなでハイタッチが生まれます。そして第3歩が『自己紹介ゲーム』です。席をくるくる交代しながら、好きな食べ物や国の話をします。『へえ、そうなんだ！』とお互いを知ることで、ただの知り合いから『また会いたい友だち』に変わっていきます。司会をする人が使いやすい『やさしい日本語』の話し方も書いてあるので、安心して進行できます。",
+      6: "【おわりに・未来への願い】誰もが安心して暮らせるまちづくりは、どこかの偉い人や行政だけがやるものではありません。まちで暮らす私たち一人ひとりが、『ちょっと自分のところでもやってみようかな』と踏み出す小さな一歩から始まります。この本を通して、だれかが誰かと新しくつながるきっかけをつくってくれたら嬉しいです。そして、まちの中で『〇〇さん！』と名前を呼び合える人が一人、また一人と増えて、何かあった時にも『大丈夫？』と助け合えるまちになっていくことを心から願っています。『名前を呼び合える安心を、あなたのまちから。』ぜひ、この本を手に取って、あなたのまちでも小さな一歩を踏み出してみてください。ありがとうございました。"
+    };
+
+    // Plain text copy data for each slide
+    const slideCopyTexts = {
+      1: `【スライド1：表紙】
+名前を呼び合える、助け合えるまちへ
+〜高校生の「日本語カフェ」から生まれた、みんながつながるワークブック〜
+TABUWATA（たぶわた）`,
+
+      2: `【スライド2：はじめに・きっかけ】
+「となりに住んでいるのに、話したことがない」
+高校生のときに感じたモヤモヤと、「日本語カフェ」の始まり
+
+■ よくあるまちの風景
+・同じマンションや近所に、外国から来た人が住んでいる
+・ゴミ出しやすれ違いのとき、顔は見るけれど挨拶だけで通り過ぎてしまう
+・「話しかけてみたいけれど、言葉が通じるかな…」とお互いにドキドキしている
+
+■ 私たちが始めたこと「日本語カフェ」
+・「同じまちに暮らしているのに、話せないなんてもったいない！」
+・そんな高校生の頃のまっすぐな想いから、気軽に集まっておしゃべりできる場所をつくりました。`,
+
+      3: `【スライド3：私たちが目指すもの】★一番伝えたいこと
+目指すのは、「その日だけ楽しかったね」で終わらない関係
+お互いに名前を知っていれば、毎日の暮らしも、いざという時も安心できる
+
+✕ 目指していないこと：その日だけのイベント
+・お祭りの日は楽しくても、次の日にはまた「話さない他人」に戻ってしまう…
+
+⭕ 私たちが本当に目指すこと
+① 街で会ったときに「〇〇さん、こんにちは！」と名前で呼び合えること
+・スーパーやすれ違ったときに、笑顔で手を振って挨拶できる日常。
+② 地震や台風のとき、真っ先に声を掛け合えること
+・「あのアパートの〇〇さんは大丈夫かな？」と心配して、助けに行ける関係。
+
+【心にとどめてほしいこと】
+「お互いの名前を知っている」――たったそれだけで、いざという時に命を守る力になります。`,
+
+      4: `【スライド4：このワークブックの役目】
+「やってみたいけれど、不安だな…」という人の背中を押す本
+だれでも読んでそのまま交流会が開ける、やさしい手引き
+
+■ 地域でよく聞く声
+・「外国の人と交流する場をつくりたいけれど、何から始めたらいいの？」
+・「日本語があまり話せない人と、どうやって仲良くなればいいか不安…」
+
+■ この本が届ける3つの安心
+01. 実際にやってみて、本当に盛り上がったゲームだけを集めました
+高校生からずっと続けてきた中で、みんなが笑顔になった確かな方法です。
+02. 読むだけでOK！ 準備するものや司会のセリフまで書いてあります
+机の並べ方やタイムスケジュール、声のかけ方までぜんぶ載っています。
+03. 日本語が得意じゃなくても大丈夫！ ルールも言葉も「やさしい日本語」
+言葉の壁をこえて、だれもが仲間になれる工夫を詰め込みました。`,
+
+      5: `【スライド5：ワークブックの中身】
+ステップを踏んで、だれでも自然と仲良くなれる3つのゲーム
+
+■ ゲーム①：名前あてゲーム（約20分）
+・ねらい：お互いの言葉を知って、緊張をほぐす
+・内容：カードの絵に、自分の国の言葉で名前をつけて覚えるゲーム。
+「それ、どういう意味？」と自然に笑いが起きて、初対面のドキドキが消えます。
+
+■ ゲーム②：みんなで謎解きゲーム（約45分）
+・ねらい：ひとつの目標にみんなで向かい、仲間になる
+・内容：グループで力を合わせてクイズに挑戦。
+言葉が通じなくても身ぶり手ぶりで知恵を出し合い、「解けた！」とハイタッチできます。
+
+■ ゲーム③：自己紹介ゲーム（約20分）
+・ねらい：好きなことや国の話をして、もっと仲良くなる
+・内容：席を交代しながら、テーマに合わせておしゃべり。
+相手のことをよく知ることで、「また会いたい人」になります。
+
+■ 司会をする人へ
+「やさしい日本語」で話すコツや、困ったときの対応も載っているので安心です。`,
+
+      6: `【スライド6：おわりに・未来への願い】
+一人ひとりの小さな一歩が、だれもが安心して暮らせるまちをつくる
+
+■ あなたの一歩を応援
+「私にもできるかな」と思っていた人が、自信を持って場を開けるように。
+
+■ まちじゅうに広がるつながり
+特別なリーダーだけでなく、ふつうに暮らす私たちが新しい輪をつくっていく。
+
+■ 助け合える安心のまち
+お互いに名前を知っていて、何かあったときにも助け合える居場所を広げたい。
+
+「名前を呼び合える安心を、あなたのまちから。」`
+    };
+
+    let currentSlide = 1;
+    const totalSlides = 6;
+
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentSlideNum = document.getElementById('currentSlideNum');
+    const totalSlideNum = document.getElementById('totalSlideNum');
+    const progressBar = document.getElementById('progressBar');
+    const notesDrawer = document.getElementById('notesDrawer');
+    const notesContent = document.getElementById('notesContent');
+    const notesToggleBtn = document.getElementById('notesToggleBtn');
+    const copySlideBtn = document.getElementById('copySlideBtn');
+    const copyToast = document.getElementById('copyToast');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const printBtn = document.getElementById('printBtn');
+    const deckContainer = document.getElementById('deckContainer');
+
+    totalSlideNum.textContent = totalSlides;
+
+    function showToast(msg) {
+      copyToast.textContent = msg;
+      copyToast.style.opacity = '1';
+      setTimeout(() => {
+        copyToast.style.opacity = '0';
+      }, 2000);
+    }
+
+    function copyToClipboard(text, successMsg = "✅ クリップボードにコピーしました！") {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(successMsg));
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast(successMsg);
+      }
+    }
+
+    copySlideBtn.addEventListener('click', () => {
+      const text = slideCopyTexts[currentSlide] || "";
+      copyToClipboard(text, `✅ スライド ${currentSlide} の文章をコピーしました！`);
+    });
+
+    function updateSlide(index) {
+      if (index < 1 || index > totalSlides) return;
+      currentSlide = index;
+
+      slides.forEach(slide => {
+        const slideIdx = parseInt(slide.getAttribute('data-index'), 10);
+        if (slideIdx === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // Update counters & progress
+      currentSlideNum.textContent = currentSlide;
+      progressBar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+      // Buttons state
+      prevBtn.disabled = (currentSlide === 1);
+      nextBtn.disabled = (currentSlide === totalSlides);
+
+      // Update speaker notes
+      notesContent.textContent = speakerNotes[currentSlide] || "原稿メモはありません。";
+    }
+
+    // Navigation events
+    prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        updateSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        updateSlide(currentSlide - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        updateSlide(1);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        updateSlide(totalSlides);
+      } else if (e.key === 'n' || e.key === 'N') {
+        e.preventDefault();
+        toggleNotes();
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+
+    // Toggle Notes
+    function toggleNotes() {
+      notesDrawer.classList.toggle('open');
+    }
+    notesToggleBtn.addEventListener('click', toggleNotes);
+
+    // Fullscreen
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        deckContainer.requestFullscreen().catch(err => {
+          alert(`全画面表示エラー: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+    // Print
+    printBtn.addEventListener('click', () => {
+      window.print();
+    });
+
+    // Initialize
+    updateSlide(1);
+  </script>
+</body>
+</html>

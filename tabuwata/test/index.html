@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TABUWATA（たぶわた）活動紹介スライド</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0f1d;
+      --bg-secondary: #111827;
+      --bg-card: rgba(255, 255, 255, 0.05);
+      --border-card: rgba(255, 255, 255, 0.12);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent-teal: #14b8a6;
+      --accent-teal-light: #5eead4;
+      --accent-orange: #fb923c;
+      --accent-orange-deep: #ea580c;
+      --accent-blue: #38bdf8;
+      --accent-purple: #c084fc;
+      --gradient-teal: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #2dd4bf 100%);
+      --gradient-orange: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+      --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .glow-sphere-1 {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(20, 184, 166, 0.18) 0%, transparent 70%);
+      top: -150px;
+      left: -150px;
+      filter: blur(80px);
+    }
+    .glow-sphere-2 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+      bottom: -100px;
+      right: -100px;
+      filter: blur(80px);
+    }
+
+    /* Deck Layout */
+    .deck-container {
+      position: relative;
+      z-index: 1;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      position: absolute;
+      width: 90vw;
+      max-width: 1200px;
+      height: 82vh;
+      max-height: 720px;
+      padding: 3rem 4rem;
+      background: var(--gradient-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-card);
+      border-radius: 28px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px) scale(0.97);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .slide.prev {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.97);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(20, 184, 166, 0.15);
+      color: var(--accent-teal-light);
+      border: 1px solid rgba(20, 184, 166, 0.3);
+      margin-bottom: 0.85rem;
+    }
+    .badge-orange {
+      background: rgba(249, 115, 22, 0.15);
+      color: var(--accent-orange);
+      border-color: rgba(249, 115, 22, 0.3);
+    }
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+    .slide-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Slide Body & Flex Grids */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    /* Cards */
+    .feature-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(20, 184, 166, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      background: rgba(20, 184, 166, 0.15);
+      color: var(--accent-teal-light);
+      border: 1px solid rgba(20, 184, 166, 0.25);
+    }
+    .card-icon.orange {
+      background: rgba(249, 115, 22, 0.15);
+      color: var(--accent-orange);
+      border-color: rgba(249, 115, 22, 0.25);
+    }
+    .card-icon.blue {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-blue);
+      border-color: rgba(56, 189, 248, 0.25);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card-text {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #d1d5db;
+    }
+
+    /* Highlight Pill */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: auto;
+      padding-top: 1rem;
+    }
+    .tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e5e7eb;
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+    }
+
+    /* Hero / Cover Specific */
+    .slide-cover {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+    .cover-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .cover-title {
+      font-size: 3.8rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(135deg, #ffffff 30%, #5eead4 80%, #fb923c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .cover-subtitle {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #e5e7eb;
+      margin-bottom: 1rem;
+    }
+    .cover-desc {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      max-width: 760px;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .cover-meta {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      font-size: 0.95rem;
+      color: var(--accent-teal-light);
+      background: rgba(20, 184, 166, 0.08);
+      padding: 0.75rem 1.75rem;
+      border-radius: 14px;
+      border: 1px solid rgba(20, 184, 166, 0.2);
+    }
+
+    /* Big Quote / Statement Box */
+    .statement-box {
+      background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(249, 115, 22, 0.08) 100%);
+      border: 1px solid rgba(20, 184, 166, 0.3);
+      border-radius: 20px;
+      padding: 1.75rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.7;
+      color: #f9fafb;
+      position: relative;
+    }
+
+    /* Key Metrics / Profile row */
+    .meta-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 0.75rem;
+    }
+    .meta-table td {
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.04);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 1rem;
+    }
+    .meta-table tr td:first-child {
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px 0 0 12px;
+      font-weight: 700;
+      color: var(--accent-teal-light);
+      width: 25%;
+    }
+    .meta-table tr td:last-child {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0 12px 12px 0;
+      color: #e5e7eb;
+    }
+
+    /* Controls Bar */
+    .controls {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 0.5rem 1.25rem;
+      border-radius: 999px;
+      z-index: 100;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .nav-btn:active {
+      transform: scale(0.92);
+    }
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .slide-counter {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 65px;
+      text-align: center;
+    }
+    .slide-counter span {
+      color: #ffffff;
+    }
+    .action-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #d1d5db;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: var(--accent-teal);
+      color: #ffffff;
+    }
+
+    /* Progress bar */
+    .progress-bar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 200;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--gradient-teal);
+      transition: width 0.3s ease;
+    }
+
+    /* Slide Indicators (Dots) */
+    .dots-container {
+      position: fixed;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 100;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .dot:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: scale(1.2);
+    }
+    .dot.active {
+      background: var(--accent-teal-light);
+      height: 26px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(94, 234, 212, 0.6);
+    }
+
+    /* Print / PDF Styles */
+    @media print {
+      body {
+        overflow: visible;
+        height: auto;
+        background: #ffffff !important;
+        color: #111827 !important;
+      }
+      .ambient-glow, .controls, .dots-container, .progress-bar-container {
+        display: none !important;
+      }
+      .deck-container {
+        display: block;
+        height: auto;
+      }
+      .slide {
+        position: relative !important;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        page-break-after: always;
+        break-after: page;
+        width: 100% !important;
+        height: 100vh !important;
+        max-width: none !important;
+        max-height: none !important;
+        border: 1px solid #e5e7eb !important;
+        background: #ffffff !important;
+        color: #111827 !important;
+        box-shadow: none !important;
+        margin-bottom: 2rem;
+      }
+      .slide-title, .cover-title, .card-title {
+        color: #111827 !important;
+        -webkit-text-fill-color: initial !important;
+      }
+      .feature-card, .statement-box, .meta-table td {
+        background: #f9fafb !important;
+        border: 1px solid #e5e7eb !important;
+        color: #374151 !important;
+      }
+      .card-text, .cover-desc, .slide-subtitle {
+        color: #4b5563 !important;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .slide {
+        padding: 2rem 1.5rem;
+        height: 86vh;
+      }
+      .slide-title {
+        font-size: 1.6rem;
+      }
+      .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        overflow-y: auto;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        overflow-y: auto;
+      }
+      .cover-title {
+        font-size: 2.4rem;
+      }
+      .cover-subtitle {
+        font-size: 1.15rem;
+      }
+      .dots-container {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Ambient Lights -->
+  <div class="ambient-glow">
+    <div class="glow-sphere-1"></div>
+    <div class="glow-sphere-2"></div>
+  </div>
+
+  <!-- Top Progress Bar -->
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Slide Dots Navigation -->
+  <div class="dots-container" id="dotsContainer"></div>
+
+  <!-- Slides Container -->
+  <div class="deck-container">
+
+    <!-- SLIDE 1: COVER -->
+    <section class="slide active slide-cover" data-index="0">
+      <div class="cover-brand">
+        <span>🌐 多文化系まちづくり団体</span>
+      </div>
+      <h1 class="cover-title">TABUWATA</h1>
+      <h2 class="cover-subtitle">多様な人々と創る、希望と可能性に満ちた地域社会へ</h2>
+      <p class="cover-desc">
+        多様な価値観や文化は社会を豊かにする。<br>
+        「違い」を力に変え、日本人と外国人が共に地域のひとりとして暮らせるまちを目指す活動紹介
+      </p>
+      <div class="cover-meta">
+        <div>📍 栃木・福岡（全国展開中）</div>
+        <div>👥 共同代表：栗又 由利子 / 坂本 文子</div>
+        <div>🗓 設立：2021年3月</div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: MISSION & VISION -->
+    <section class="slide" data-index="1">
+      <div class="slide-header">
+        <div class="badge">MISSION & PHILOSOPHY</div>
+        <h2 class="slide-title">活動の理念：違いを「希望と可能性」へ</h2>
+        <p class="slide-subtitle">多文化共生を“特別なこと”から“日常のワクワク”に変えていく</p>
+      </div>
+      <div class="slide-body">
+        <div class="statement-box">
+          「多様性に含まれた『違い』を大切にし、それを誰もがワクワクするような希望や可能性につなげることに夢中です。」
+        </div>
+        <div class="grid-2">
+          <div class="feature-card">
+            <div class="card-icon">🤝</div>
+            <h3 class="card-title">「共生」を地域の当たり前に</h3>
+            <p class="card-text">
+              日本社会で急速に進むグローバル化や外国人住民の増加。外国人を「支援される側」としてのみ捉えるのではなく、対等に地域を一緒につくる「地域のひとり」として捉え直します。
+            </p>
+            <div class="tag-list">
+              <span class="tag">#対等なパートナーシップ</span>
+              <span class="tag">#多文化系まちづくり</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon orange">🏛</div>
+            <h3 class="card-title">セクターを超えた架け橋</h3>
+            <p class="card-text">
+              行政、企業、大学、NPO、そして地域住民をつなぎ、制度や言葉の壁を越えた連携の場をコーディネート。実効性のある地域課題解決に取り組みます。
+            </p>
+            <div class="tag-list">
+              <span class="tag">#産官学民連携</span>
+              <span class="tag">#課題解決型アプローチ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: SPIRIT -->
+    <section class="slide" data-index="2">
+      <div class="slide-header">
+        <div class="badge badge-orange">CORE VALUES</div>
+        <h2 class="slide-title">大切にしていること ～TABUWATAスピリット～</h2>
+        <p class="slide-subtitle">心地よい調和だけでなく、違いと向き合い対話する3つの行動原則</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="card-icon">1️⃣</div>
+            <h3 class="card-title">安心して「違い」を出せる環境</h3>
+            <p class="card-text">
+              異なる価値観や意見を安心して表現できる心理的安全性こそが、これからの時代を生き抜く新たな価値や仕組みの源泉になります。
+            </p>
+            <div class="tag-list">
+              <span class="tag">心理的安全</span>
+              <span class="tag">自己表現の尊重</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon orange">2️⃣</div>
+            <h3 class="card-title">「違い」に折り合いをつける</h3>
+            <p class="card-text">
+              「違い」は時に居心地の悪さも生みます。しかし「心地よくない違い」こそ多文化共生を前進させる絶好の機会と捉え、丁寧に対話して折り合います。
+            </p>
+            <div class="tag-list">
+              <span class="tag">摩擦を機会に</span>
+              <span class="tag">対話と相互理解</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon blue">3️⃣</div>
+            <h3 class="card-title">“力の勾配”を生じさせない</h3>
+            <p class="card-text">
+              日本人・外国人、支援者・受益者という上下関係（力の勾配）をつくらない配慮と工夫を徹底。対等な関係性で協働する技能を広げます。
+            </p>
+            <div class="tag-list">
+              <span class="tag">フラットな協働</span>
+              <span class="tag">未来の教養スキル</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: KEY ACTIVITIES -->
+    <section class="slide" data-index="3">
+      <div class="slide-header">
+        <div class="badge">ACTIVITIES</div>
+        <h2 class="slide-title">私たちの主要な活動の柱</h2>
+        <p class="slide-subtitle">課題抽出から現場の実践、情報発信まで多角的にアプローチ</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="card-icon">🧭</div>
+            <h3 class="card-title">コーディネーション</h3>
+            <p class="card-text">
+              「外国人住民と防災の準備をしたい」「当事者の生の声を聞きたい」という自治体・地域・企業の相談を受け、最適なマッチングや施策設計を伴走支援。
+            </p>
+            <div class="tag-list">
+              <span class="tag">自治体連携</span>
+              <span class="tag">防災コンサル</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon orange">🎪</div>
+            <h3 class="card-title">企画・イベント運営</h3>
+            <p class="card-text">
+              多文化共生研修の実施や、日本人と外国人が上下関係なく楽しめる体験型ワークショップ（防災食教室、防災キャンプ等）を企画・開催。
+            </p>
+            <div class="tag-list">
+              <span class="tag">体験型ワークショップ</span>
+              <span class="tag">研修・セミナー</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon blue">📢</div>
+            <h3 class="card-title">広報・啓発・学びの場</h3>
+            <p class="card-text">
+              オンライン講座「TABUWATAまなびば」、ラジオ「あなたの隣の外国人」、ニュースレター「TABUWATA通信」を通じ、現場のリアルな知見を発信。
+            </p>
+            <div class="tag-list">
+              <span class="tag">TABUWATAまなびば</span>
+              <span class="tag">ラジオ・通信発行</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: FEATURED PROJECT (DISASTER × MULTICULTURAL) -->
+    <section class="slide" data-index="4">
+      <div class="slide-header">
+        <div class="badge badge-orange">HIGHLIGHT PROJECT</div>
+        <h2 class="slide-title">注目の実践：多文化共生 × 地域防災</h2>
+        <p class="slide-subtitle">言語や文化の壁を超えて「いのちを守る」共通のテーマからつながる</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="feature-card">
+            <div class="card-icon orange">🍲</div>
+            <h3 class="card-title">防災食「変身」アレンジレシピ教室</h3>
+            <p class="card-text">
+              非常食はそのまま食べるだけでなく、各国の調味料やハラール・ベジタリアン等の文化を取り入れておいしくアレンジ！
+              宇都宮や福岡などで開催され、「食」の楽しさを入り口に外国人住民と日本人住民が自然に打ち解ける大人気企画。
+            </p>
+            <div class="tag-list">
+              <span class="tag">宇都宮・福岡展開</span>
+              <span class="tag">レシピ集ダウンロード公開</span>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon blue">🏕</div>
+            <h3 class="card-title">多文化防災キャンプ & リーダー養成</h3>
+            <p class="card-text">
+              自然災害が多い日本において、外国人住民が災害時に孤立しない避難所運営・情報伝達を実践型キャンプで検証。
+              行政の自主防災組織リーダー養成事業での事例紹介や、大学研究フェアでのポスター発表など専門性の高い発信も展開。
+            </p>
+            <div class="tag-list">
+              <span class="tag">実践的避難訓練</span>
+              <span class="tag">自主防災リーダー養成連携</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: OVERVIEW & NETWORK -->
+    <section class="slide" data-index="5">
+      <div class="slide-header">
+        <div class="badge">ORGANIZATION</div>
+        <h2 class="slide-title">団体概要 & ネットワーク</h2>
+        <p class="slide-subtitle">市民・行政・学術機関と手を取り合い、広がり続ける輪</p>
+      </div>
+      <div class="slide-body">
+        <table class="meta-table">
+          <tr>
+            <td>団体名称</td>
+            <td>TABUWATA（たぶわた / 多文化系まちづくり団体）</td>
+          </tr>
+          <tr>
+            <td>設立年月</td>
+            <td>2021年3月（任意団体）</td>
+          </tr>
+          <tr>
+            <td>共同代表</td>
+            <td>栗又 由利子 / 坂本 文子</td>
+          </tr>
+          <tr>
+            <td>会員規模</td>
+            <td>会員 約97名（役員10名体制）</td>
+          </tr>
+          <tr>
+            <td>活動拠点</td>
+            <td>【事務局】栃木県矢板市木幡866-3 ／ 【支部】TABUWATAふくおか（福岡）</td>
+          </tr>
+          <tr>
+            <td>主な連携先</td>
+            <td>地方自治体、宇都宮大学（共同発表）、地域自主防災組織、協賛企業各社</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: SUMMARY & ACTION -->
+    <section class="slide slide-cover" data-index="6">
+      <div class="cover-brand">
+        <span>✨ NEXT STEP</span>
+      </div>
+      <h2 class="cover-title" style="font-size: 3rem;">「違い」をワクワクする未来へ</h2>
+      <p class="cover-desc" style="font-size: 1.2rem; max-width: 820px;">
+        多文化共生は、一部の人のための特別な活動ではありません。<br>
+        誰もが自分らしく安心して暮らし、新たな可能性を見つけるための地域づくりです。<br>
+        あなたもTABUWATAの輪に参加してみませんか？
+      </p>
+      <div class="grid-3" style="max-width: 860px; margin-bottom: 1.5rem; text-align: left;">
+        <div class="feature-card" style="padding: 1.25rem;">
+          <h4 style="color: var(--accent-teal-light); margin-bottom: 0.4rem;">📖 学ぶ</h4>
+          <p style="font-size: 0.88rem; color: #d1d5db;">オンライン講座「まなびば」やニュースレターで多文化の現場を知る</p>
+        </div>
+        <div class="feature-card" style="padding: 1.25rem;">
+          <h4 style="color: var(--accent-orange); margin-bottom: 0.4rem;">🤝 つながる</h4>
+          <p style="font-size: 0.88rem; color: #d1d5db;">防災食教室や交流イベント、会員・サポーターとして参加</p>
+        </div>
+        <div class="feature-card" style="padding: 1.25rem;">
+          <h4 style="color: var(--accent-blue); margin-bottom: 0.4rem;">🏛 協働する</h4>
+          <p style="font-size: 0.88rem; color: #d1d5db;">行政・企業・学校との研修や共同防災プロジェクトの実施</p>
+        </div>
+      </div>
+      <div style="font-size: 0.95rem; color: var(--text-muted);">
+        公式Web: <strong style="color: #fff;">tabuwata.org</strong> ｜ お問い合わせ・ご参加歓迎
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Bottom Navigation Controls -->
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" title="前のスライド (←/↑)">❮</button>
+    <div class="slide-counter">
+      <span id="currentSlideNum">1</span> / <span id="totalSlideNum">7</span>
+    </div>
+    <button class="nav-btn" id="nextBtn" title="次のスライド (→/↓/Space)">❯</button>
+    <button class="action-btn" id="fullscreenBtn" title="全画面表示 (F)">全画面</button>
+    <button class="action-btn" id="printBtn" title="印刷 / PDF保存">印刷・PDF</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentSlideNum = document.getElementById('currentSlideNum');
+    const totalSlideNum = document.getElementById('totalSlideNum');
+    const progressBar = document.getElementById('progressBar');
+    const dotsContainer = document.getElementById('dotsContainer');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const printBtn = document.getElementById('printBtn');
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    totalSlideNum.textContent = totalSlides;
+
+    // Create Navigation Dots
+    slides.forEach((_, idx) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (idx === 0) dot.classList.add('active');
+      dot.title = `スライド ${idx + 1}`;
+      dot.addEventListener('click', () => goToSlide(idx));
+      dotsContainer.appendChild(dot);
+    });
+    const dots = document.querySelectorAll('.dot');
+
+    function updateSlide() {
+      slides.forEach((slide, idx) => {
+        slide.classList.remove('active', 'prev');
+        if (idx === currentIndex) {
+          slide.classList.add('active');
+        } else if (idx < currentIndex) {
+          slide.classList.add('prev');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentIndex);
+      });
+
+      currentSlideNum.textContent = currentIndex + 1;
+      const progressPercent = ((currentIndex + 1) / totalSlides) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === totalSlides - 1;
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentIndex = index;
+        updateSlide();
+      }
+    }
+
+    function nextSlide() {
+      if (currentIndex < totalSlides - 1) {
+        currentIndex++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlide();
+      }
+    }
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      } else if (e.key === 'Home') {
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        goToSlide(totalSlides - 1);
+      }
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    document.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 50) nextSlide();
+      if (touchEndX > touchStartX + 50) prevSlide();
+    }, false);
+
+    // Event listeners
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.error(err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+    printBtn.addEventListener('click', () => {
+      window.print();
+    });
+
+    // Initialize
+    updateSlide();
+  </script>
+</body>
+</html>
