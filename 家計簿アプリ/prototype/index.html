@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f5f7f8"><meta name="apple-mobile-web-app-capable" content="yes"><title>家計簿</title><link rel="stylesheet" href="minimal.css?v=4.2"></head>
+<body><main>
+<header><a class="brand" href="#home">家計簿</a></header>
+<section id="page-home" data-page="home" aria-labelledby="homeHeading">
+<div class="intro"><h1 id="homeHeading" tabindex="-1">支出合計</h1></div>
+<section class="summary"><div class="summary-top"><label for="month">対象月</label><input type="month" id="month" aria-label="表示する月"></div><div class="total"><span>¥</span><strong id="total">0</strong></div><p class="summary-note">利用記録に基づく合計</p></section>
+<section class="connection"><div><strong id="connectionLabel">Gmail 未接続</strong><p id="lastSync">未取得</p></div><button id="sync" class="primary">Gmailを接続</button></section>
+<p id="homeStatus" class="home-status" role="status" aria-live="polite" hidden></p>
+<p id="demoHint" class="home-footnote" hidden>サンプル・貼り付けの合計を表示中</p>
+</section>
+<section id="page-history" data-page="history" aria-labelledby="historyHeading" hidden>
+<div class="page-heading"><h1 id="historyHeading" tabindex="-1">履歴</h1><input type="month" id="historyMonth" aria-label="履歴を表示する月"></div>
+<p id="count" class="history-count">0件の利用</p>
+<p id="historyStatus" class="home-status" role="status" hidden></p>
+<div class="tabs" role="group" aria-label="履歴の種類"><button data-tab="accepted" class="active">利用履歴 <span id="acceptedCount">0</span></button><button data-tab="review">要確認 <span id="reviewCount">0</span></button><button data-tab="excluded">除外済み <span id="excludedCount">0</span></button></div>
+<section id="list" class="list" aria-live="polite"></section>
+<details class="info-panel"><summary>取得状況と集計について</summary><p id="notice" role="status" aria-live="polite">通知に記載された支出を集計しています。通知対象外の支出は含まれません。</p><p>毎月1日〜末日、利用日基準。要確認・除外済みは全期間を表示します。通知の合計は確定請求額と異なる場合があります。</p></details>
+</section>
+<section id="page-settings" data-page="settings" aria-labelledby="settingsHeading" hidden>
+<div class="page-heading"><h1 id="settingsHeading" tabindex="-1">設定</h1></div>
+<p id="settingsStatus" class="home-status" role="status" hidden></p>
+<section class="settings-content settings-card" id="settings"><h2>Gmail接続</h2><p>このWeb試作では、起動し直すと再接続が必要です。</p><label>Google OAuth クライアントID<input id="clientId" placeholder="…apps.googleusercontent.com" autocomplete="off"></label><label>通知を取得する開始日<input id="since" type="date" value="2026-10-01"></label><p class="hint">読み取り権限はGmail全体へのアクセスを含みますが、本アプリは対応する利用通知だけを検索します。本文やトークンは保存しません。</p><button id="saveSettings" class="primary">設定を保存</button><p class="hint">初期設定の手順は同梱のREADMEをご覧ください。</p></section>
+<section class="settings-card"><h2>CSV取り込み</h2><p>三井住友カードのクレジット明細に対応しています。利用日を基準に日本円の利用額を計上し、チャージも支出に含めます。</p><label>CSVファイル<input id="csvFile" type="file" accept=".csv,text/csv"></label><button id="csvPreviewButton">取り込み内容を確認</button><p class="hint">ファイルは端末内で処理します。同じ利用者のGmail記録とまとめます。別の人の明細は取り込まないでください。銀行口座・デビットのCSVには未対応です。</p></section>
+<section class="settings-card"><h2>表示するデータ</h2><label class="dataset-label" for="dataset">集計対象</label><select id="dataset"><option value="gmail">Gmail・CSVの記録</option><option value="csv">CSVの記録（Gmail接続前）</option><option value="demo">サンプル・貼り付け</option></select><p class="hint">実際の記録と試用データは分けて保存しています。</p></section>
+<section class="try-panel"><h2>テスト用データ</h2><button id="sample">サンプルを取り込む</button><button id="pasteButton" class="text-button">メール本文を貼り付ける</button></section>
+<section class="settings-card"><h2>データの管理</h2><p>記録はこのブラウザ内に保存されます。</p><button id="export">記録をJSONで書き出す</button><button id="reset" class="danger">保存した記録をすべて削除</button></section>
+<footer>試作 v0.5</footer>
+</section>
+</main>
+<nav class="page-nav" aria-label="メインメニュー"><a href="#home" data-nav="home" aria-current="page">ホーム</a><a href="#history" data-nav="history">履歴</a><a href="#settings" data-nav="settings">設定</a></nav>
+<dialog id="paste"><form method="dialog"><div class="dialog-header"><h2>通知を取り込む</h2><button aria-label="閉じる" class="icon-button">×</button></div></form><label>送信元<select id="from"><option value="statement@vpass.ne.jp">クレジット通知</option><option value="smbc-debit@smbc-card.com">デビット通知</option></select></label><label>件名<input id="subject" value="ご利用のお知らせ【三井住友カード】"></label><label>メール本文<textarea id="body" rows="9" placeholder="利用日時・利用先・金額を含む本文"></textarea></label><p class="hint">同じ送信元・件名・本文の再貼り付けは重複として除外します。</p><button id="importPaste" class="primary">取り込む</button></dialog>
+<dialog id="resolution"><form method="dialog"><div class="dialog-header"><h2>ほかの記録で解決済み</h2><button aria-label="閉じる" class="icon-button">×</button></div></form><p id="resolutionInfo"></p><label>すでに反映されている記録<select id="resolutionTarget"></select></label><p>選んだ記録との対応を残し、この通知を「除外済み」に移します。支出額の追加・減額は行いません。</p><label class="check-label"><input id="resolutionChecked" type="checkbox">この通知の内容が、選んだ記録にすでに反映されていることを確認しました。</label><p class="hint">返金の場合、元の支払いがあるだけでは解決済みになりません。返金による減額まで反映済みか確認してください。</p><button id="confirmResolution" class="primary">解決済みとして除外する</button></dialog>
+<dialog id="csvImportDialog"><form method="dialog"><div class="dialog-header"><h2>CSVの取り込み確認</h2><button aria-label="閉じる" class="icon-button">×</button></div></form><p id="csvSummary"></p><p id="csvTarget"></p><p class="hint">同日の同額または同じ利用先の既存記録は、重複候補として要確認に回します。重複なら「ほかの記録で解決済み」、別の支出なら「別の支出として計上」を選べます。返金・分割等も自動計上しません。</p><button id="confirmCsvImport" class="primary">取り込む</button></dialog>
+<script type="module" src="app.js?v=5"></script></body></html>

@@ -1,0 +1,20 @@
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+.venv/
+__pycache__/
+*.pyc
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+
+# ローカルの実データ、生成物、配布用コピー
+/sensuma_game_result_input/dist/
+/家計簿アプリ/*
+!/家計簿アプリ/prototype/
+/家計簿アプリ/prototype/preview-*.jpg
+/英語の小説の訳を/novel-site.tar.gz
+/英語の小説の訳を/novel-prompt/.openai/
+/英語の小説の訳を/novel-prompt/.git-local-backup/

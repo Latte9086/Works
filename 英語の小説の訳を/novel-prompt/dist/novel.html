@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ことばの栞 | 小説翻訳プロンプト</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="hub.css"><link rel="stylesheet" href="simple.css"><link rel="stylesheet" href="flow.css">
+<body><header><a href="index.html" class="brand">プロンプト作成</a></header>
+<main><section class="intro"><h1>小説翻訳</h1><p>翻訳・文法・表現学習用のプロンプトを作成します。</p></section>
+<div class="workspace"><form id="settings"><div class="section-head"><span>01</span><h2>読み方を選ぶ</h2><button type="button" id="reset" class="text-button">初期設定に戻す</button></div>
+<label>英語力<select name="level"><option>初級 — 基礎から丁寧に</option><option selected>中級 — 文の構造と語感を深く</option><option>上級 — 文体と細かなニュアンスまで</option><option>自分で指定する</option></select></label><label id="customLevelWrap" hidden>英語力の補足<input name="customLevel" placeholder="例：英検2級。分詞構文が苦手"></label>
+<div class="pair"><label>使うAI<select name="ai"><option>ChatGPT</option><option>Claude</option><option>Gemini</option><option>その他・汎用</option></select></label><label>解説の詳しさ<select name="depth"><option>短め</option><option selected>標準</option><option>じっくり</option></select></label></div>
+<label>学習の重点<select name="focus"><option>バランスよく楽しむ</option><option>会話で使える表現を増やす</option><option>自分の文章・創作に生かす</option><option>文法を重点的に理解する</option></select></label>
+<fieldset><legend>表現を自分のものにする</legend><label class="check"><input type="checkbox" name="similar" checked>類似表現と使い分け</label><label class="check"><input type="checkbox" name="practice" checked>短い応用練習と解答例</label><label class="check"><input type="checkbox" name="cards" checked>持ち帰りたい表現カード</label></fieldset>
+<details><summary>作品・英文を添える <span>任意</span></summary><label>作品名・作者<input name="work" placeholder="分かる範囲で入力"></label><label>前後の状況・口調メモ<textarea name="context" rows="2" placeholder="例：二人は旧友。主人公の一人称は「私」。"></textarea></label><label>分析する英文<textarea name="passage" rows="5" placeholder="空欄でもプロンプトを作れます。"></textarea></label></details>
+<p class="privacy">設定のみ、このブラウザーに保存します。英文は保存・送信しません。</p></form>
+<section class="result"><div class="section-head"><span>02</span><h2>あなたのプロンプト</h2><span class="badge">自動更新</span></div><div class="recommend" hidden><b id="recTitle">物語も、学びも。</b><p id="recText"></p></div><div class="output-head"><span>テンプレート v1.0</span><span id="count"></span></div><textarea id="output" readonly aria-label="生成されたプロンプト" spellcheck="false"></textarea><div class="actions"><button id="copy">コピー</button><button id="download" class="secondary">.txt 保存</button></div><p class="hint">コピーして、選んだAIの入力欄に貼り付けてください。<br>このアプリ内では翻訳やAIへの自動送信は行いません。</p><p id="status" role="status" aria-live="polite"></p></section></div>
+</main><script src="app.js"></script><script src="hub.js"></script><script src="flow.js"></script></body></html>
+
+
+

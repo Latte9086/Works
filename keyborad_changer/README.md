@@ -72,7 +72,7 @@ python3 main.py
 
 ## 設定の変更 (`config.json`)
 
-もし「Alt ではなく Win (Command) キーを英数/かなにしたい」場合は、[config.json](file:///c:/Users/latte/mywork/mine/keyborad_changer/config.json) を変更できます。
+もし「Alt ではなく Win (Command) キーを英数/かなにしたい」場合は、[config.json](config.json) を変更できます。
 
 ```json
 {
